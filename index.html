@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Virtual - Grandes Mestres da Literatura</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dourado: #d4af37;
+            --dourado-claro: #e8c95a;
+            --preto: #0a0a0a;
+            --preto-suave: #1a1a1a;
+            --cinza-escuro: #2a2a2a;
+            --cinza: #3a3a3a;
+            --cinza-claro: #b0b0b0;
+            --branco: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: var(--preto);
+            color: var(--branco);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--preto) 0%, var(--cinza-escuro) 100%);
+            border-bottom: 2px solid var(--dourado);
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            color: var(--dourado);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        header p {
+            color: var(--cinza-claro);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            font-style: italic;
+        }
+
+        .ornamento {
+            color: var(--dourado);
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+            letter-spacing: 8px;
+        }
+
+        /* Navegação */
+        nav {
+            background-color: var(--preto-suave);
+            border-bottom: 1px solid var(--cinza);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem 2rem;
+        }
+
+        nav a {
+            color: var(--cinza-claro);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            padding: 0.3rem 0;
+            border-bottom: 1px solid transparent;
+        }
+
+        nav a:hover {
+            color: var(--dourado);
+            border-bottom-color: var(--dourado);
+        }
+
+        /* Hero / Destaque */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: linear-gradient(180deg, var(--preto-suave) 0%, var(--preto) 100%);
+            border-bottom: 1px solid var(--cinza-escuro);
+        }
+
+        .hero h2 {
+            font-size: 1.6rem;
+            color: var(--dourado-claro);
+            font-weight: 400;
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto 1rem;
+        }
+
+        .hero p {
+            color: var(--cinza-claro);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 0.95rem;
+        }
+
+        /* Grid de Autores */
+        .autores {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .autores h2 {
+            text-align: center;
+            color: var(--dourado);
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .autores .subtitulo {
+            text-align: center;
+            color: var(--cinza-claro);
+            font-style: italic;
+            margin-bottom: 3rem;
+            font-size: 0.95rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Card do Autor */
+        .card {
+            background: linear-gradient(160deg, var(--cinza-escuro) 0%, var(--preto-suave) 100%);
+            border: 1px solid var(--cinza);
+            border-radius: 4px;
+            padding: 2rem 1.5rem;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--dourado), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--dourado);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        .card .iniciais {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--dourado);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--dourado);
+            margin: 0 auto 1.2rem;
+            background: var(--preto);
+            letter-spacing: 2px;
+            font-family: 'Georgia', serif;
+        }
+
+        .card h3 {
+            text-align: center;
+            color: var(--dourado-claro);
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 0.3rem;
+            letter-spacing: 1px;
+        }
+
+        .card .nascimento {
+            text-align: center;
+            color: var(--cinza-claro);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .card .bio {
+            color: var(--cinza-claro);
+            font-size: 0.88rem;
+            text-align: justify;
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+        }
+
+        .card .obras {
+            list-style: none;
+            border-top: 1px solid var(--cinza);
+            padding-top: 0.8rem;
+        }
+
+        .card .obras li {
+            color: var(--cinza-claro);
+            font-size: 0.82rem;
+            padding: 0.3rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-style: italic;
+        }
+
+        .card .obras li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--dourado);
+            font-size: 0.7rem;
+        }
+
+        /* Citação */
+        .citacao {
+            background: linear-gradient(135deg, var(--preto-suave) 0%, var(--cinza-escuro) 100%);
+            border-top: 1px solid var(--cinza);
+            border-bottom: 1px solid var(--cinza);
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+
+        .citacao blockquote {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--dourado-claro);
+            line-height: 1.8;
+            position: relative;
+        }
+
+        .citacao blockquote::before,
+        .citacao blockquote::after {
+            color: var(--dourado);
+            font-size: 3rem;
+            position: absolute;
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .citacao blockquote::before {
+            content: '"';
+            top: -1.5rem;
+            left: -1rem;
+        }
+
+        .citacao blockquote::after {
+            content: '"';
+            bottom: -2.5rem;
+            right: -1rem;
+        }
+
+        .citacao cite {
+            display: block;
+            margin-top: 1.5rem;
+            color: var(--cinza-claro);
+            font-size: 0.9rem;
+            font-style: normal;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--preto-suave);
+            border-top: 1px solid var(--cinza);
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        footer .ornamento {
+            font-size: 1rem;
+            letter-spacing: 10px;
+            margin-bottom: 1rem;
+        }
+
+        footer p {
+            color: var(--cinza-claro);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        footer a {
+            color: var(--dourado);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsivo */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+
+            .hero h2 {
+                font-size: 1.2rem;
+            }
+
+            .citacao blockquote {
+                font-size: 1.05rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="ornamento">✦ ✦ ✦</div>
+        <h1>Biblioteca Virtual</h1>
+        <p>Grandes Mestres da Literatura Brasileira</p>
+        <div class="ornamento">✦ ✦ ✦</div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#autores">Autores</a></li>
+            <li><a href="#citacao">Citação</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <h2>"A literatura é a maneira mais agradável de ignorar a vida."</h2>
+        <p>Uma homenagem a cinco vozes que eternizaram a alma brasileira através da palavra.</p>
+    </section>
+
+    <section class="autores" id="autores">
+        <h2>Os Homenageados</h2>
+        <p class="subtitulo">Cinco gigantes, cinco universos, uma só língua</p>
+
+        <div class="grid">
+
+            <!-- Clarice Lispector -->
+            <article class="card">
+                <div class="iniciais">CL</div>
+                <h3>Clarice Lispector</h3>
+                <p class="nascimento">1920 — 1977</p>
+                <p class="bio">
+                    Ucraniana de nascimento, brasileira de coração. Revolucionou a prosa nacional com
+                    uma escrita introspectiva e existencial, mergulhando nas profundezas da alma
+                    humana com uma linguagem única e perturbadora.
+                </p>
+                <ul class="obras">
+                    <li>A Hora da Estrela</li>
+                    <li>A Paixão Segundo G.H.</li>
+                    <li>Perto do Coração Selvagem</li>
+                </ul>
+            </article>
+
+            <!-- Machado de Assis -->
+            <article class="card">
+                <div class="iniciais">MA</div>
+                <h3>Machado de Assis</h3>
+                <p class="nascimento">1839 — 1908</p>
+                <p class="bio">
+                    O maior nome da literatura brasileira. Fundador da Academia Brasileira de Letras,
+                    sua obra é marcada pela ironia fina, pelo pessimismo e pela análise implacável
+                    da sociedade e da alma humana.
+                </p>
+                <ul class="obras">
+                    <li>Dom Casmurro</li>
+                    <li>Memórias Póstumas de Brás Cubas</li>
+                    <li>Quincas Borba</li>
+                </ul>
+            </article>
+
+            <!-- Carlos Drummond de Andrade -->
+            <article class="card">
+                <div class="iniciais">CD</div>
+                <h3>Carlos Drummond de Andrade</h3>
+                <p class="nascimento">1902 — 1987</p>
+                <p class="bio">
+                    O poeta do cotidiano e do existencial. Com versos que transitam entre o
+                    humor e a melancolia, tornou-se um dos maiores nomes da poesia brasileira,
+                    retratando o homem comum e suas angústias.
+                </p>
+                <ul class="obras">
+                    <li>Alguma Poesia</li>
+                    <li>A Rosa do Povo</li>
+                    <li>Claro Enigma</li>
+                </ul>
+            </article>
+
+            <!-- Conceição Evaristo -->
+            <article class="card">
+                <div class="iniciais">CE</div>
+                <h3>Conceição Evaristo</h3>
+                <p class="nascimento">1946 — presente</p>
+                <p class="bio">
+                    Escritora, professora e militante. Sua obra dá voz às mulheres negras
+                    e às periferias, tecendo uma literatura de resistência e memória,
+                    com uma escrita poética e profundamente humana.
+                </p>
+                <ul class="obras">
+                    <li>Olhos d'Água</li>
+                    <li>Ponciá Vicêncio</li>
+                    <li>Insubmissas Lágrimas de Mulheres</li>
+                </ul>
+            </article>
+
+            <!-- Nota sobre o quinto autor -->
+            <article class="card">
+                <div class="iniciais">✦</div>
+                <h3>E você?</h3>
+                <p class="nascimento">—</p>
+                <p class="bio">
+                    Este espaço é dedicado a todos os leitores e escritores que mantêm viva
+                    a chama da literatura brasileira. A biblioteca é um organismo vivo:
+                    cresce a cada leitura, a cada descoberta, a cada nova voz.
+                </p>
+                <ul class="obras">
+                    <li>Leia sempre</li>
+                    <li>Escreva sempre</li>
+                    <li>Compartilhe sempre</li>
+                </ul>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="citacao" id="citacao">
+        <blockquote>
+            "Liberdade é pouco. O que eu desejo ainda não tem nome."
+            <cite>— Clarice Lispector</cite>
+        </blockquote>
+    </section>
+
+    <footer id="sobre">
+        <div class="ornamento">✦ ✦ ✦</div>
+        <p>Biblioteca Virtual — Homenagem à Literatura Brasileira</p>
+        <p>Feito com <span style="color: var(--dourado);">✦</span> para os amantes das letras</p>
+        <p style="margin-top: 0.8rem; font-size: 0.75rem; opacity: 0.6;">
+            Projeto aberto no <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+        </p>
+    </footer>
+
+</body>
+</html>
